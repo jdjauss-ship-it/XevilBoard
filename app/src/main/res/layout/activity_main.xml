@@ -1,55 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp">
+    android:background="#0A0A0F"
+    android:fillViewport="true">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="🎵 Xevil Board"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:paddingBottom="20dp" />
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="⭐ FAVORITES"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:paddingBottom="10dp" />
+        <!-- Header -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XEVIL BOARD"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.08"
+            android:layout_marginTop="12dp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="No favorite sounds yet"
-        android:textSize="16sp"
-        android:padding="16dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Premium Soundboard"
+            android:textColor="#888894"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="🎵 ALL SOUNDS"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:paddingTop="20dp"
-        android:paddingBottom="10dp" />
+        <!-- Stop All -->
+        <Button
+            android:id="@+id/stopAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginTop="24dp"
+            android:text="⏹  STOP ALL"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:backgroundTint="#1C1C25" />
 
-    <Button
-        android:id="@+id/addSoundButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="＋ Add Sound" />
+        <!-- Favorites title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⭐  FAVORITES"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="12dp" />
 
-    <Button
-        android:id="@+id/stopAllButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="⏹ Stop All"
-        android:layout_marginTop="10dp" />
+        <!-- Favorite cards -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-</LinearLayout>
+            <Button
+                android:id="@+id/favoriteSound1"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:text="⭐\nNo Favorites"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:backgroundTint="#15151D" />
+
+            <Button
+                android:id="@+id/favoriteSound2"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:text="⭐\nNo Favorites"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:backgroundTint="#15151D" />
+
+        </LinearLayout>
+
+        <!-- All Sounds -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🎵  ALL SOUNDS"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/addSoundButton"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:text="＋  ADD SOUND"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:backgroundTint="#24243A" />
+
+    </LinearLayout>
+
+</ScrollView>
