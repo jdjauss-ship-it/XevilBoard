@@ -1,6 +1,7 @@
 package com.xevil.board
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
@@ -8,6 +9,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
@@ -43,7 +45,9 @@ class MainActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
 
-            if (result.resultCode != RESULT_OK) return@registerForActivityResult
+            if (result.resultCode != RESULT_OK) {
+                return@registerForActivityResult
+            }
 
             val uri = result.data?.data ?: return@registerForActivityResult
 
@@ -68,15 +72,17 @@ class MainActivity : AppCompatActivity() {
             saveSounds()
             refreshUI()
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
 
-        soundsContainer = findViewById(R.id.soundsContainer)
-        favoritesContainer = findViewById(R.id.favoritesContainer)
+        soundsContainer =
+            findViewById(R.id.soundsContainer)
+
+        favoritesContainer =
+            findViewById(R.id.favoritesContainer)
 
         val addSoundButton: Button =
             findViewById(R.id.addSoundButton)
@@ -129,7 +135,9 @@ class MainActivity : AppCompatActivity() {
             if (it.moveToFirst()) {
 
                 val index =
-                    it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    it.getColumnIndex(
+                        OpenableColumns.DISPLAY_NAME
+                    )
 
                 if (index >= 0) {
                     name = it.getString(index)
@@ -153,20 +161,26 @@ class MainActivity : AppCompatActivity() {
             val empty = TextView(this)
 
             empty.text = "No favorite sounds yet"
-
-            empty.setTextColor(Color.rgb(120, 120, 130))
-
             empty.textSize = 14f
+            empty.setTextColor(
+                Color.rgb(120, 120, 130)
+            )
 
-            empty.setPadding(4, 4, 4, 12)
+            empty.setPadding(
+                4,
+                4,
+                4,
+                12
+            )
 
             favoritesContainer.addView(empty)
 
         } else {
 
-            favoriteSounds.forEach {
+            favoriteSounds.forEach { sound ->
+
                 favoritesContainer.addView(
-                    createSoundCard(it)
+                    createSoundCard(sound)
                 )
             }
         }
@@ -181,34 +195,42 @@ class MainActivity : AppCompatActivity() {
                 val empty = TextView(this)
 
                 empty.text = "No sounds added yet"
-
-                empty.setTextColor(Color.rgb(120, 120, 130))
-
                 empty.textSize = 14f
-
                 empty.gravity = Gravity.CENTER
 
-                empty.setPadding(4, 20, 4, 20)
+                empty.setTextColor(
+                    Color.rgb(120, 120, 130)
+                )
+
+                empty.setPadding(
+                    4,
+                    20,
+                    4,
+                    20
+                )
 
                 soundsContainer.addView(empty)
             }
 
         } else {
 
-            normalSounds.forEach {
+            normalSounds.forEach { sound ->
 
                 soundsContainer.addView(
-                    createSoundCard(it)
+                    createSoundCard(sound)
                 )
             }
         }
     }
 
-    private fun createSoundCard(sound: SoundItem): View {
+    private fun createSoundCard(
+        sound: SoundItem
+    ): View {
 
         val card = LinearLayout(this)
 
-        card.orientation = LinearLayout.VERTICAL
+        card.orientation =
+            LinearLayout.VERTICAL
 
         card.setPadding(
             16,
@@ -228,22 +250,23 @@ class MainActivity : AppCompatActivity() {
 
         card.background = background
 
-        val params =
+        val cardParams =
             LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
 
-        params.setMargins(
+        cardParams.setMargins(
             0,
             0,
             0,
             12
         )
 
-        card.layoutParams = params
+        card.layoutParams = cardParams
 
-        val topRow = LinearLayout(this)
+        val topRow =
+            LinearLayout(this)
 
         topRow.orientation =
             LinearLayout.HORIZONTAL
@@ -251,13 +274,17 @@ class MainActivity : AppCompatActivity() {
         topRow.gravity =
             Gravity.CENTER_VERTICAL
 
-        val name = TextView(this)
+        val name =
+            TextView(this)
 
-        name.text = "🔊  ${sound.name}"
+        name.text =
+            "🔊  ${sound.name}"
 
         name.textSize = 16f
 
-        name.setTextColor(Color.WHITE)
+        name.setTextColor(
+            Color.WHITE
+        )
 
         name.setTypeface(
             null,
@@ -267,7 +294,7 @@ class MainActivity : AppCompatActivity() {
         name.maxLines = 1
 
         name.ellipsize =
-            android.text.TextUtils.TruncateAt.END
+            TextUtils.TruncateAt.END
 
         val nameParams =
             LinearLayout.LayoutParams(
@@ -285,8 +312,11 @@ class MainActivity : AppCompatActivity() {
             Button(this)
 
         favoriteButton.text =
-            if (sound.favorite) "⭐"
-            else "☆"
+            if (sound.favorite) {
+                "⭐"
+            } else {
+                "☆"
+            }
 
         favoriteButton.textSize = 18f
 
@@ -295,7 +325,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         favoriteButton.backgroundTintList =
-            android.content.res.ColorStateList.valueOf(
+            ColorStateList.valueOf(
                 Color.TRANSPARENT
             )
 
@@ -328,7 +358,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         deleteButton.backgroundTintList =
-            android.content.res.ColorStateList.valueOf(
+            ColorStateList.valueOf(
                 Color.TRANSPARENT
             )
 
@@ -365,7 +395,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         playButton.backgroundTintList =
-            android.content.res.ColorStateList.valueOf(
+            ColorStateList.valueOf(
                 Color.rgb(43, 42, 70)
             )
 
@@ -388,23 +418,25 @@ class MainActivity : AppCompatActivity() {
         )
 
         playButton.setOnClickListener {
-
             playSound(sound)
         }
 
         return card
     }
 
-    private fun playSound(sound: SoundItem) {
+    private fun playSound(
+        sound: SoundItem
+    ) {
 
         try {
 
             mediaPlayer?.release()
 
-            mediaPlayer = MediaPlayer.create(
-                this,
-                Uri.parse(sound.uri)
-            )
+            mediaPlayer =
+                MediaPlayer.create(
+                    this,
+                    Uri.parse(sound.uri)
+                )
 
             if (mediaPlayer == null) {
 
@@ -420,13 +452,12 @@ class MainActivity : AppCompatActivity() {
             mediaPlayer?.setOnCompletionListener {
 
                 it.release()
-
                 mediaPlayer = null
             }
 
             mediaPlayer?.start()
 
-        } catch (e: Exception) {
+        } catch (_: Exception) {
 
             Toast.makeText(
                 this,
@@ -439,7 +470,6 @@ class MainActivity : AppCompatActivity() {
     private fun stopAll() {
 
         mediaPlayer?.stop()
-
         mediaPlayer?.release()
 
         mediaPlayer = null
@@ -451,16 +481,16 @@ class MainActivity : AppCompatActivity() {
         ).show()
     }
 
-    private fun deleteSound(sound: SoundItem) {
+    private fun deleteSound(
+        sound: SoundItem
+    ) {
 
         mediaPlayer?.release()
-
         mediaPlayer = null
 
         sounds.remove(sound)
 
         saveSounds()
-
         refreshUI()
 
         Toast.makeText(
@@ -474,27 +504,27 @@ class MainActivity : AppCompatActivity() {
 
         val array = JSONArray()
 
-        sounds.forEach {
+        sounds.forEach { sound ->
 
-            val objectData =
+            val data =
                 JSONObject()
 
-            objectData.put(
+            data.put(
                 "uri",
-                it.uri
+                sound.uri
             )
 
-            objectData.put(
+            data.put(
                 "name",
-                it.name
+                sound.name
             )
 
-            objectData.put(
+            data.put(
                 "favorite",
-                it.favorite
+                sound.favorite
             )
 
-            array.put(objectData)
+            array.put(data)
         }
 
         preferences.edit()
@@ -522,25 +552,19 @@ class MainActivity : AppCompatActivity() {
 
             for (i in 0 until array.length()) {
 
-                val objectData =
+                val data =
                     array.getJSONObject(i)
 
                 sounds.add(
                     SoundItem(
                         uri =
-                            objectData.getString(
-                                "uri"
-                            ),
+                            data.getString("uri"),
 
                         name =
-                            objectData.getString(
-                                "name"
-                            ),
+                            data.getString("name"),
 
                         favorite =
-                            objectData.getBoolean(
-                                "favorite"
-                            )
+                            data.getBoolean("favorite")
                     )
                 )
             }
@@ -552,7 +576,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
 
         mediaPlayer?.release()
-
         mediaPlayer = null
 
         super.onDestroy()
